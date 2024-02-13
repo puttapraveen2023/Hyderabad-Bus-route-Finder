@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyderabad Bus Route Finder</title>
+    <style>
+        body {
+            background-color: #d0d8df;
+            color: #ecf0f1;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .bus-route-finder-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #34495e;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #3498db;
+            font-size: 18px;
+        }
+
+        
+
+input {
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #3498db;
+    border-radius: 4px;
+    width: 100%;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+}
+
+
+        button {
+            background-color: #3498db;
+            color: #ffffff;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2074a0;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .bus-routes-container {
+            margin-top: 20px;
+        }
+
+        h1, h2 {
+            color: #3498db;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            background-color: #2c3e50;
+            padding: 14px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        li:hover {
+            background-color: #34495e;
+        }
+    </style>
+</head>
+<body>
+    <div class="bus-route-finder-container">
+        <h1>Hyderabad Bus Route Finder</h1>
+        <div class="input-container">
+            <label>
+                Starting Point:
+                <input type="text" id="startInput">
+            </label>
+            <label>
+                Ending Point:
+                <input type="text" id="endInput">
+            </label>
+            <button onclick="findBusRoutes()">Find Bus Routes</button>
+        </div>
+
+        <p id="errorMessage" class="error-message"></p>
+
+        <div id="busRoutesContainer" class="bus-routes-container">
+            <h2>Bus Routes:</h2>
+            <ul id="busRoutesList"></ul>
+        </div>
+    </div>
+
+    <script>
+        function findBusRoutes() {
+            const startInput = document.getElementById('startInput').value;
+            const endInput = document.getElementById('endInput').value;
+            const errorMessageElement = document.getElementById('errorMessage');
+            const busRoutesContainer = document.getElementById('busRoutesContainer');
+            const busRoutesList = document.getElementById('busRoutesList');
+
+            // Clear previous results
+            errorMessageElement.textContent = '';
+            busRoutesContainer.style.display = 'none';
+            busRoutesList.innerHTML = '';
+
+            // Validate inputs
+            if (!startInput || !endInput) {
+                errorMessageElement.textContent = 'Please enter both starting and ending points.';
+                return;
+            }
+
+            // Simulate API call (replace this with actual API call)
+            const fakeApiResponse = [
+                { busNumber: '189', intermediateStops: ['Kukatpally', 'Ameerpet', 'Dilsukhnagar'], },
+                { busNumber: 'XYZ', intermediateStops: ['Stop1', 'Stop2', 'Stop3'], },
+                // Add more fake bus routes as needed
+            ];
+
+            // Display bus routes
+            if (fakeApiResponse.length > 0) {
+                busRoutesContainer.style.display = 'block';
+                fakeApiResponse.forEach(route => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `Bus ${route.busNumber} - Stops: ${route.intermediateStops.join(', ')}`;
+                    busRoutesList.appendChild(listItem);
+                });
+            } else {
+                errorMessageElement.textContent = 'No bus routes found for the given points.';
+            }
+        }
+    </script>
+</body>
+</html>
